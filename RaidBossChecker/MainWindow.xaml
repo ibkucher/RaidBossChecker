@@ -1,0 +1,570 @@
+﻿<Window x:Class="RaidBossChecker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RaidBossChecker"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="Raid Boss Checker" Height="450" Width="625" Loaded="Window_Loaded" ResizeMode="CanMinimize" WindowStyle="None">
+
+    <Window.Resources>
+        <!--Settings Storyboard-->
+        <Storyboard x:Key="CloseSettings">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridSettings">
+                <EasingDoubleKeyFrame KeyTime="0" Value="200"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.25" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="GridBackground">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.25" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OpenSettings">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridSettings">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.25" Value="200"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="GridBackground">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.25" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <!--About Storyboard-->
+        <Storyboard x:Key="CloseAbout">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="GridAbout">
+                <EasingDoubleKeyFrame KeyTime="0" Value="-450"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OpenAbout">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="GridAbout">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="-450"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <!--Term of Use Storyboard-->
+        <Storyboard x:Key="CloseTermOfUse">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="GridAbout">
+                <EasingDoubleKeyFrame KeyTime="0" Value="-670"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.25" Value="-450"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="OpenTermOfUse">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="GridAbout">
+                <EasingDoubleKeyFrame KeyTime="0" Value="-450"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.25" Value="-670"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <!--Chest target copy popup-->
+        <Storyboard x:Key="SbTopBarMessage" >
+            <!--label shows for 2 sec-->
+            <DoubleAnimation Storyboard.TargetProperty="Opacity"  From="1" To="1" Duration="0:0:2" />
+            <!--Fade out the label after 2 sec (it takes 1 sec to fade out)-->
+            <DoubleAnimation Storyboard.TargetProperty="Opacity" BeginTime="0:0:2" From="1" To="0" DecelerationRatio=".5" Duration="0:0:1" />
+        </Storyboard>
+        <!-- Search animation - progress Bar-->
+        <Storyboard x:Key="SearchAnimation_Start">
+            <DoubleAnimation Storyboard.TargetName="SearchAnimation_LineOne" Storyboard.TargetProperty="Value" From="100" To="0" Duration="0:0:1" />
+            <DoubleAnimation Storyboard.TargetName="SearchAnimation_LineOne" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:1" />
+            <DoubleAnimation Storyboard.TargetName="SearchAnimation_LineTwo" Storyboard.TargetProperty="Value" From="100" To="0" Duration="0:0:2" />
+            <DoubleAnimation Storyboard.TargetName="SearchAnimation_LineTwo" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:2" />
+            <DoubleAnimation Storyboard.TargetName="SearchAnimation_LineThree" Storyboard.TargetProperty="Value" From="100" To="0" Duration="0:0:3" />
+            <DoubleAnimation Storyboard.TargetName="SearchAnimation_LineThree" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:3" />
+            <DoubleAnimation Storyboard.TargetName="SearchAnimation_Title" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:2" />
+        </Storyboard>
+        <Storyboard x:Key="SearchAnimation_Stop">
+            <DoubleAnimation Storyboard.TargetName="SearchAnimation_LineOne" Storyboard.TargetProperty="Value" From="0" To="100" Duration="0" />
+            <DoubleAnimation Storyboard.TargetName="SearchAnimation_LineOne" Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0" />
+            <DoubleAnimation Storyboard.TargetName="SearchAnimation_LineTwo" Storyboard.TargetProperty="Value" From="0" To="100" Duration="0" />
+            <DoubleAnimation Storyboard.TargetName="SearchAnimation_LineTwo" Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0" />
+            <DoubleAnimation Storyboard.TargetName="SearchAnimation_LineThree" Storyboard.TargetProperty="Value" From="0" To="100" Duration="0" />
+            <DoubleAnimation Storyboard.TargetName="SearchAnimation_LineThree" Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0" />
+            <DoubleAnimation Storyboard.TargetName="SearchAnimation_Title" Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0" />
+        </Storyboard>
+        
+    </Window.Resources>
+
+    <Window.Triggers>
+        <!--Settings Events-->
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="BtnCloseSettings">
+            <BeginStoryboard x:Name="CloseMenu_BeginStoryboard" Storyboard="{StaticResource CloseSettings}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="BtnCloseSettingsSecond">
+            <BeginStoryboard Storyboard="{StaticResource CloseSettings}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="BtnOpenSettings">
+            <BeginStoryboard Storyboard="{StaticResource OpenSettings}"/>
+        </EventTrigger>
+        <!--About Events-->
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="BtnCloseAbout">
+            <BeginStoryboard x:Name="CloseAbout_BeginStoryboard" Storyboard="{StaticResource CloseAbout}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="BtnOpenAbout">
+            <BeginStoryboard Storyboard="{StaticResource OpenAbout}"/>
+        </EventTrigger>
+        <!--Term of Use Events-->
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="BtnCloseTermOfUse">
+            <BeginStoryboard x:Name="CloseTermOfUse_BeginStoryboard" Storyboard="{StaticResource CloseTermOfUse}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="BtnOpenTermOfUse">
+            <BeginStoryboard Storyboard="{StaticResource OpenTermOfUse}"/>
+        </EventTrigger>
+        <!-- Button Start/Stop - Search animation -->
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="btnStart">
+            <BeginStoryboard Storyboard="{StaticResource SearchAnimation_Start}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="btnStop">
+            <BeginStoryboard Storyboard="{StaticResource SearchAnimation_Stop}"/>
+        </EventTrigger>
+    </Window.Triggers>
+
+    <Grid>
+        <!--MENU BACKGROUND START-->
+        <Grid x:Name="GridBackground" Background="#FFEFEFEF" Opacity="0"/>
+        <!--MENU BACKGROUND END-->
+
+        <!--TOP BAR START-->
+        <Grid x:Name="GridTopBar" Height="50" Width="625" HorizontalAlignment="Left" VerticalAlignment="Top" MouseLeftButtonDown="GridTopBar_MouseLeftButtonDown" Panel.ZIndex="3">
+            <Grid Background="#EFEFEF" Margin="0 0 0 0"/>
+            <Label Content="{DynamicResource lang_Title}" HorizontalAlignment="Left" Margin="25,5,0,0" VerticalAlignment="Top" FontSize="16"/>
+            <Label Content="{DynamicResource lang_SubTitle}" HorizontalAlignment="Left" Margin="90,26,0,0" VerticalAlignment="Top" FontSize="9" Opacity="0.75"/>
+            <Button x:Name="BtnExit" Content="X" HorizontalAlignment="Right" Margin="0 15 15 0" VerticalAlignment="Top" Width="30" Height="20" Click="BtnExit_Click" Padding="2" FontSize="14"/>
+            <Button x:Name="BtnMinimizeWindow" Content="–" HorizontalAlignment="Right" Margin="0 15 60 0" VerticalAlignment="Top" Width="30" Height="20" Click="BtnMinimizeWindow_Click" Padding="2,6,2,2" FontSize="14"/>
+
+            <materialDesign:Card x:Name="TopBarMessage" Background="{DynamicResource MaterialDesignPaper}"
+                  Foreground="{DynamicResource PrimaryHueMidBrush}"
+                  Width="300" Height="40"
+                  Padding="5 3 5 3" Margin="0 5 110 0"
+                  HorizontalAlignment="Right" VerticalAlignment="Top" Opacity="1">
+                <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center">
+                    <Run x:Name="TextRunTopBarMessage" Text="/target chest is copied"/>
+                </TextBlock>
+            </materialDesign:Card>
+
+        </Grid>
+        <!--TOP BAR END-->
+
+        <!--LEFT SIDE BAR START-->
+        <Grid Width="200" Height="400" HorizontalAlignment="Left" Margin="0 50 0 0" VerticalAlignment="Top" >
+            <Button x:Name="btnStart" Content="{DynamicResource lang_Start}" HorizontalAlignment="Right" Margin="0,295,10,0" VerticalAlignment="Top" Width="85" Click="btnStart_Click" Height="40" Padding="0"/>
+            <Button x:Name="btnStop" Content="{DynamicResource lang_Stop}" HorizontalAlignment="Left" Margin="10,295,0,0" VerticalAlignment="Top" Width="85" Click="btnStop_Click" Height="40" Padding="0"/>
+            <StackPanel Width="200" Height="30" Margin="0,15,0,0" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <ComboBox x:Name="cboxServerList" Width="120" Loaded="cboxServerList_Loaded" SelectionChanged="cboxServerList_SelectionChanged"/>
+            </StackPanel>
+            <StackPanel Width="200" Height="95" Margin="0,190,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Grid Margin="10 0 0 0" Height="20">
+                    <Button x:Name="BtnChestCabrio" VerticalAlignment="Center" HorizontalAlignment="Left" Width="20" Height="20" Click="BtnChestCabrio_Click" BorderBrush="{x:Null}" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="Images/chest.png" Stretch="Uniform"/>
+                        </Button.Background>
+                    </Button>
+                    <CheckBox x:Name="checkBoxCabrio" Content="{DynamicResource lang_Cbox_Cabrio}" Margin="25 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="checkBoxCabrio_Checked" Unchecked="checkBoxCabrio_Unchecked"/>
+                </Grid>
+                <Grid Margin="10 5 0 0" Height="20">
+                    <Button x:Name="BtnChestHallate" VerticalAlignment="Center" HorizontalAlignment="Left" Width="20" Height="20" BorderBrush="{x:Null}" Click="BtnChestHallate_Click" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="Images/chest.png" Stretch="UniformToFill"/>
+                        </Button.Background>
+                    </Button>
+                    <CheckBox x:Name="checkBoxHallate" Content="{DynamicResource lang_Cbox_Hallate}" Margin="25 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="checkBoxHallate_Checked" Unchecked="checkBoxHallate_Unchecked"/>
+                </Grid>
+                <Grid Margin="10 5 0 0" Height="20">
+                    <Button x:Name="BtnChestKernon" VerticalAlignment="Center" HorizontalAlignment="Left" Width="20" Height="20" BorderBrush="{x:Null}" Click="BtnChestKernon_Click" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="Images/chest.png" Stretch="Uniform"/>
+                        </Button.Background>
+                    </Button>
+                    <CheckBox x:Name="checkBoxKernon" Content="{DynamicResource lang_Cbox_Kernon}" Margin="25 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="checkBoxKernon_Checked" Unchecked="checkBoxKernon_Unchecked"/>
+                </Grid>
+                <Grid Margin="10 5 0 0" Height="20">
+                    <Button x:Name="BtnChestGolkonda" VerticalAlignment="Center" HorizontalAlignment="Left" Width="20" Height="20" BorderBrush="{x:Null}" Click="BtnChestGolkonda_Click" >
+                        <Button.Background>
+                            <ImageBrush ImageSource="Images/chest.png" Stretch="UniformToFill"/>
+                        </Button.Background>
+                    </Button>
+                    <CheckBox x:Name="checkBoxGolkonda" Content="{DynamicResource lang_Cbox_Golkonda}" Margin="25 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="checkBoxGolkonda_Checked" Unchecked="checkBoxGolkonda_Unchecked"/>
+                </Grid>
+            </StackPanel>
+            <Button x:Name="btnGetAllKeyBosses" Content="{DynamicResource lang_ShowAllKeyRaidBosses}" HorizontalAlignment="Left" Margin="10,95,0,0" VerticalAlignment="Top" Width="180" Height="24" Click="btnGetAllKeyBosses_Click" Padding="0"/>
+            <Button x:Name="btnGetAllBosses" Content="{DynamicResource lang_ShowAllRaidBosses}" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Width="180" Click="btnGetAllBosses_Click" Height="25" Padding="0"/>
+            <Button x:Name="BtnOpenSettings" Content="{DynamicResource lang_Settings}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Margin="50,360,50,0" Padding="0" Height="25"/>
+            <Button x:Name="BtnOpenAbout" Margin="10,362,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="{x:Null}" Width="20" Height="20" Padding="0" Background="{x:Null}" >
+                <materialDesign:PackIcon Width="20" Height="20" Kind="InformationCircleOutline" Foreground="{DynamicResource PrimaryHueMidBrush}" />
+            </Button>
+            <Button x:Name="BtnOpenGuide" Margin="0,362,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" BorderBrush="{x:Null}" Width="20" Height="20" Padding="0" Background="{x:Null}" Click="BtnOpenGuide_Click" >
+                <materialDesign:PackIcon Width="20" Height="20" Kind="HelpCircleOutline" Foreground="{DynamicResource PrimaryHueMidBrush}" />
+            </Button>
+
+        </Grid>
+        <!--LEFT SIDE BAR END-->
+
+        <!--MAIN CONTENT START - LIST VIEW-->
+        <Grid Width="425" Height="400" Margin="0 50 0 0" HorizontalAlignment="Right" VerticalAlignment="Top" >
+
+            <Grid x:Name="GridSearchAnimation"
+                  Margin="350, 350, -350, -350" Visibility="Visible"
+                  HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock x:Name="SearchAnimation_Title" Text="{DynamicResource lang_SearchAnimation_Title}" Foreground="{DynamicResource PrimaryHueLightBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+                <Viewbox Width="130" Height="130">
+                    <ProgressBar x:Name="SearchAnimation_LineOne" Style="{StaticResource MaterialDesignCircularProgressBar}" Foreground="{DynamicResource PrimaryHueLightBrush}"
+                             Value="0" IsIndeterminate="True"
+                             Width="90" Height="90" />
+                </Viewbox>
+
+                <Viewbox Width="110" Height="110">
+                    <ProgressBar x:Name="SearchAnimation_LineTwo" Style="{StaticResource MaterialDesignCircularProgressBar}" Foreground="{DynamicResource PrimaryHueLightBrush}"
+                             Value="0" IsIndeterminate="True"
+                             Width="100" Height="100"/>
+                </Viewbox>
+
+                <Viewbox Width="90" Height="90">
+                    <ProgressBar x:Name="SearchAnimation_LineThree" Style="{StaticResource MaterialDesignCircularProgressBar}" Foreground="{DynamicResource PrimaryHueLightBrush}"
+                             Value="0" IsIndeterminate="True"
+                             Width="110" Height="110"/>
+                </Viewbox>
+            </Grid>
+            
+
+
+
+            <Grid Height="350" VerticalAlignment="Top">
+
+                <ListView Name="listView" Visibility="Visible" VerticalAlignment="Top" SelectionChanged="listView_SelectionChanged" >
+                    <!-- Заглушка старт -->
+                    
+                    <!--<ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="IsEnabled" Value="False" />
+                            <Setter Property="Margin" Value="5" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>-->
+                    
+                    <!-- Заглушка енд -->
+                    
+                    <ListView.ItemTemplate >
+                        <DataTemplate>
+                            <WrapPanel>
+                                <DockPanel>
+                                    <Grid Margin="5" Height="Auto">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40" />
+                                            <ColumnDefinition Width="170" />
+                                            <ColumnDefinition Width="92" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Text="{DynamicResource lang_Boss}" Grid.Row="0" />
+                                        <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="Red" Grid.Column="1" Grid.Row="0" />
+                                        <TextBlock Text="{DynamicResource lang_Killed}" Grid.Row="1" />
+                                        <TextBlock Text="{Binding TimeKilled, StringFormat='dd.MM.yyyy HH:mm:ss'}" Foreground="{DynamicResource PrimaryHueMidBrush}" Grid.Column="1" Grid.Row="1" />
+                                        <TextBlock Text="{DynamicResource lang_RespawnFrom}" Grid.Column="2" Grid.Row="0"/>
+                                        <TextBlock Text="{Binding RespawnStart, StringFormat='dd.MM HH:mm'}" Foreground="Green" Grid.Column="4" Grid.Row="0" />
+                                        <TextBlock Text="{DynamicResource lang_RespawnTo}" Grid.Column="2" Grid.Row="1"/>
+                                        <TextBlock Text="{Binding RespawnEnd, StringFormat='dd.MM HH:mm'}" Foreground="Green" Grid.Column="4" Grid.Row="1" />
+                                    </Grid>
+                                    
+                                </DockPanel>
+                            </WrapPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <ListView Name="listViewAllRB" Visibility="Hidden" VerticalAlignment="Top" SelectionChanged="listViewAllRB_SelectionChanged" >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <WrapPanel>
+                                <DockPanel>
+                                    <Grid Margin="5" Height="Auto">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40" />
+                                            <ColumnDefinition Width="170" />
+                                            <ColumnDefinition Width="40" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Text="{DynamicResource lang_Boss}" Grid.Column="0"/>
+                                        <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="Red" Grid.Column="1" />
+                                        <TextBlock Text="{DynamicResource lang_Killed}" Grid.Column="2" />
+                                        <TextBlock Text="{Binding TimeKilled, StringFormat='dd.MM.yyyy HH:mm:ss'}" Foreground="Blue" Grid.Column="3"  />
+                                    </Grid>
+                                </DockPanel>
+                            </WrapPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+            </Grid>
+
+            <Label Content="{DynamicResource lang_Updated}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10 10 10 10"/>
+            <Label x:Name="lblLastTimeUpdated" Content="---" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="90 10 10 10"/>
+
+            <Label Content="{DynamicResource lang_Found}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="24" Margin="10 10 35 10"/>
+            <Label x:Name="lblCount" Content="---" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="24" Margin="10 10 10 10"/>
+
+        </Grid>
+        <!--MAIN CONTENT END - LIST VIEW-->
+
+        <!--Settings START-->
+        <Grid x:Name="GridSettings" Width="200" Height="400" HorizontalAlignment="Left" Margin="-200 50 0 0" Background="{DynamicResource MaterialDesignPaper}">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <Grid Height="25" Margin="10 10 10 0" VerticalAlignment="Top">
+                <Label x:Name="lblSettings" Content="{DynamicResource lang_Settings}" HorizontalAlignment="Center" FontWeight="Bold" />
+                <Button x:Name="BtnCloseSettingsSecond" HorizontalAlignment="Right" Background="{x:Null}" BorderBrush="{x:Null}" Width="25" Height="25" Padding="0" Click="BtnCloseSettingsSecond_Click" >
+                    <materialDesign:PackIcon Kind="Close" Foreground="{DynamicResource MaterialDesignBody}"/>
+                </Button>
+            </Grid>
+            <Grid Height="100" Margin="10 60 10 0" VerticalAlignment="Top">
+                <Label Content="{DynamicResource lang_SoundAlert}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+                <Viewbox Width="20" Height="20" Margin="0 65 0 0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Canvas Width="24" Height="24">
+                        <Path Fill="#FF747474" Data="M21,3V15.5A3.5,3.5 0 0,1 17.5,19A3.5,3.5 0 0,1 14,15.5A3.5,3.5 0 0,1 17.5,12C18.04,12 18.55,12.12 19,12.34V6.47L9,8.6V17.5A3.5,3.5 0 0,1 5.5,21A3.5,3.5 0 0,1 2,17.5A3.5,3.5 0 0,1 5.5,14C6.04,14 6.55,14.12 7,14.34V6L21,3Z" />
+                    </Canvas>
+                </Viewbox>
+                <ComboBox x:Name="cboxSound" Margin="30 60 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" SelectionChanged="cboxSound_SelectionChanged" Height="28" Loaded="cboxSound_Loaded"/>
+                <Button x:Name="btnSoundTest" Click="btnSoundTest_Click" Margin="0 60 0 0" HorizontalAlignment="Right" VerticalAlignment="Top" BorderBrush="{x:Null}" Width="50" Height="30" Padding="0" >
+                    <materialDesign:PackIcon Kind="Play" />
+                </Button>
+
+                <Slider x:Name="sliderVolume" Margin="0 30 0 0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.5,0.5" Maximum="0.99" ValueChanged="sliderVolume_ValueChanged" Height="25" Loaded="sliderVolume_Loaded"/>
+                <Viewbox Width="20" Height="20" Margin="0 30 0 0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Canvas Width="24" Height="24">
+                        <Path Fill="#FF747474" Data="M5,9V15H9L14,20V4L9,9M18.5,12C18.5,10.23 17.5,8.71 16,7.97V16C17.5,15.29 18.5,13.76 18.5,12Z" />
+                    </Canvas>
+                </Viewbox>
+                <Viewbox Width="20" Height="20" Margin="0 30 0 0" HorizontalAlignment="Right" VerticalAlignment="Top">
+                    <Canvas Width="24" Height="24">
+                        <Path Fill="#FF747474" Data="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.84 14,18.7V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16C15.5,15.29 16.5,13.76 16.5,12M3,9V15H7L12,20V4L7,9H3Z" />
+                    </Canvas>
+                </Viewbox>
+            </Grid>
+
+            <Grid Height="150" Margin="10 185 10 0" VerticalAlignment="Top">
+                <Label x:Name="lblUpdateEvery" Content="{DynamicResource lang_UpdateEvery}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <ComboBox x:Name="cboxSecondsToUpdate" Margin="80 29 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="40" Height="24" SelectionChanged="cboxSecondsToUpdate_SelectionChanged" Loaded="cboxSecondsToUpdate_Loaded"/>
+                <Label Content="{DynamicResource lang_Every}" Margin="0 30 100 0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                <Label x:Name="lblSec" Content="{DynamicResource lang_Sec}" Margin="120 30 0 0" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.28,0.604"/>
+                <Label Content="{DynamicResource lang_ShowTime}" Margin="0 90 0 0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <CheckBox x:Name="checkBoxMskTime" Margin="0 122 0 0" Style="{DynamicResource MaterialDesignSwitchToggleButton}" HorizontalAlignment="Center" VerticalAlignment="Top" Checked="checkBoxMskTime_Checked" Unchecked="checkBoxMskTime_Unchecked"/>
+                <Label x:Name="lblMskTime" Content="{DynamicResource lang_MSKTime}" Margin="110 119 0 0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Label x:Name="lblMyTime" Content="{DynamicResource lang_MyTime}" Margin="0 119 110 0" HorizontalAlignment="Right" VerticalAlignment="Top" FontWeight="Bold"/>
+            </Grid>
+
+            <Button x:Name="BtnCloseSettings" Content="{DynamicResource lang_Close}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Margin="50,360,50,0" Padding="0" Height="25" Click="BtnCloseSettings_Click"/>
+
+        </Grid>
+        <!--Settings END-->
+
+        <!--ABOUT START-->
+        <Grid x:Name="GridAbout"  Margin="0 0 0 -670" Width="625" Height="620" Background="{DynamicResource MaterialDesignPaper}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Panel.ZIndex="2">
+
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+
+            <Rectangle Height="140" Width="625" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,260,0,0">
+                <Rectangle.Fill>
+                    <ImageBrush ImageSource="Images/about.jpg" Stretch="Uniform"/>
+                </Rectangle.Fill>
+            </Rectangle>
+
+            <Grid Width="450" Height="240" Margin="0 20 0 0" VerticalAlignment="Top" HorizontalAlignment="Center">
+                <Rectangle Width="75" Height="75" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="40,0,335,0">
+                    <Rectangle.Fill>
+                        <ImageBrush ImageSource="Images/Lineage_II-Blue.png" Stretch="UniformToFill"/>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <TextBlock HorizontalAlignment="Center" Margin="130,5,0,0" TextWrapping="Wrap" Text="{DynamicResource lang_Title}" VerticalAlignment="Top" FontSize="18" Width="320"/>
+                <TextBlock Width="320" HorizontalAlignment="Center" Margin="130,32,0,0" Text="{DynamicResource lang_Description}" VerticalAlignment="Top" TextWrapping="Wrap" FontSize="16"/>
+                <TextBlock Width="450" HorizontalAlignment="Center" Margin="0,130,0,0" VerticalAlignment="Top" TextWrapping="Wrap" TextAlignment="Center" FontSize="14" >
+                    <Run Text="{DynamicResource lang_Copyright}"/>
+                    <Run x:Name="TextRunCopyrightYear" Text="2020"/>
+                    <Run Text="{DynamicResource lang_AllRightsReserved}"/>
+                </TextBlock>
+                <TextBlock Width="450" HorizontalAlignment="Center" Margin="0,155,0,0" VerticalAlignment="Top" TextWrapping="Wrap" TextAlignment="Center" FontSize="14">
+                    <Run Text="{DynamicResource lang_License}"/>
+                    <Button x:Name="BtnOpenTermOfUse" Height="14" Width="Auto" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" >
+                        <TextBlock Text="{DynamicResource lang_TermOfUse}" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                    </Button>
+                </TextBlock>
+                <TextBlock Width="450" HorizontalAlignment="Center" Margin="0,105,0,0"  VerticalAlignment="Top" TextWrapping="Wrap" TextAlignment="Center" FontSize="14">
+                    <Run Text="{DynamicResource lang_Version}"/>
+                    <Run x:Name="TextRunVersion" Text="0.0.0.0"/>
+                </TextBlock>
+                <Button x:Name="BtnCloseAbout" Content="{DynamicResource lang_Close}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="100" Padding="0" Height="25"/>
+                <Button x:Name="BtnContactEmail" Margin="0 0 30 0"  HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderBrush="{x:Null}" Width="25" Height="25" Padding="0" Background="{x:Null}" Click="BtnContactEmail_Click" >
+                    <materialDesign:PackIcon Width="25" Height="25" Kind="Email" Foreground="{DynamicResource PrimaryHueMidBrush}" />
+                </Button>
+                <Button x:Name="BtnContactGithub" Margin="0 0 0 0" HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderBrush="{x:Null}" Width="25" Height="25" Padding="0" Background="{x:Null}" Click="BtnContactGithub_Click" >
+                    <materialDesign:PackIcon Width="25" Height="25" Kind="Github" Foreground="{DynamicResource PrimaryHueMidBrush}" />
+                </Button>
+                <Button x:Name="BtnContactTelegram" Margin="0 0 60 0" HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderBrush="{x:Null}" Width="25" Height="25" Padding="0" Background="{x:Null}" Click="BtnContactTelegram_Click" >
+                    <materialDesign:PackIcon Width="25" Height="25" Kind="Telegram" Foreground="{DynamicResource PrimaryHueMidBrush}" />
+                </Button>
+            </Grid>
+            <Grid Width="625" Height="210" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14">
+                    <Run FontWeight="Bold" Text="{DynamicResource lang_TermOfUse_Title}"/>
+                </TextBlock>
+
+                <ListBox Margin="15,22,0,45">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBoxItem Padding="3">
+                        <TextBlock TextWrapping="Wrap" Text="{DynamicResource lang_TermOfUse_General}"/>
+                    </ListBoxItem>
+                    <ListBoxItem Padding="3">
+                        <TextBlock TextWrapping="Wrap">
+                            <Run Text="● " Foreground="{DynamicResource PrimaryHueMidBrush}" FontWeight="Bold"/>
+                            <Run Text="{DynamicResource lang_TermOfUse_1}"/>
+                        </TextBlock>
+                    </ListBoxItem>
+                    <ListBoxItem Padding="3">
+                        <TextBlock TextWrapping="Wrap">
+                            <Run Text="● " Foreground="{DynamicResource PrimaryHueMidBrush}" FontWeight="Bold"/>
+                            <Run Text="{DynamicResource lang_TermOfUse_2}"/>
+                        </TextBlock>
+                    </ListBoxItem>
+                    <ListBoxItem Padding="3">
+                        <TextBlock TextWrapping="Wrap">
+                            <Run Text="● " Foreground="{DynamicResource PrimaryHueMidBrush}" FontWeight="Bold"/>
+                            <Run Text="{DynamicResource lang_TermOfUse_3}"/>
+                        </TextBlock>
+                    </ListBoxItem>
+                    <ListBoxItem Padding="3">
+                        <TextBlock TextWrapping="Wrap">
+                            <Run Text="● " Foreground="{DynamicResource PrimaryHueMidBrush}" FontWeight="Bold"/>
+                            <Run Text="{DynamicResource lang_TermOfUse_4}"/>
+                        </TextBlock>
+                    </ListBoxItem>
+                </ListBox>
+
+                <Button x:Name="BtnCloseTermOfUse" Margin="0 0 0 15" HorizontalAlignment="Center" VerticalAlignment="Bottom" BorderBrush="{x:Null}" Width="25" Height="25" Padding="0" Background="{x:Null}" >
+                    <materialDesign:PackIcon Width="25" Height="25" Kind="ArrowUpBoldCircleOutline" Foreground="{DynamicResource PrimaryHueMidBrush}" />
+                </Button>
+
+            </Grid>
+        </Grid>
+        <!--ABOUT END-->
+
+        <!--GUIDE START-->
+        <!-- Margin="670,0,-670,0"-->
+        <Grid x:Name="GridGuide" Margin="670,0,-670,0" Width="625" Height="400" VerticalAlignment="Bottom" Panel.ZIndex="2" MouseLeftButtonDown="GridGuide_MouseLeftButtonDown" >
+            <Rectangle Width="Auto" Height="Auto" Fill="{DynamicResource MaterialDesignPaper}" Opacity="0.3" />
+            <Rectangle Width="425" Height="350" VerticalAlignment="Top" HorizontalAlignment="Right" Fill="{DynamicResource MaterialDesignPaper}"/>
+            <!-- ARROWS -->
+            <Rectangle Width="80" Height="25" RenderTransformOrigin="0.5,0.5" Margin="169,21,376,354" Opacity="0.85" >
+                <Rectangle.Fill>
+                    <ImageBrush ImageSource="Images/arrow_1.png" Stretch="Uniform"/>
+                </Rectangle.Fill>
+            </Rectangle>
+
+            <Rectangle Width="80" Height="25" RenderTransformOrigin="0.5,0.5" Margin="141,189,404,186" Opacity="0.85" >
+                <Rectangle.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-375"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Rectangle.RenderTransform>
+                <Rectangle.Fill>
+                    <ImageBrush ImageSource="Images/arrow_1.png" Stretch="Uniform"/>
+                </Rectangle.Fill>
+            </Rectangle>
+
+            <Rectangle Width="80" Height="25" RenderTransformOrigin="0.5,0.5" Margin="187,257,358,118" Opacity="0.85" >
+                <Rectangle.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-390"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Rectangle.RenderTransform>
+                <Rectangle.Fill>
+                    <ImageBrush ImageSource="Images/arrow_1.png" Stretch="Uniform"/>
+                </Rectangle.Fill>
+            </Rectangle>
+
+            <Rectangle Width="80" Height="25" RenderTransformOrigin="0.5,0.5" Margin="19,153,526,222" Opacity="0.85" >
+                <Rectangle.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-390"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Rectangle.RenderTransform>
+                <Rectangle.Fill>
+                    <ImageBrush ImageSource="Images/arrow_1.png" Stretch="Uniform"/>
+                </Rectangle.Fill>
+            </Rectangle>
+
+            <Rectangle RenderTransformOrigin="0.5,0.5" Margin="97,317,460,18" Opacity="0.85" >
+                <Rectangle.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-225"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Rectangle.RenderTransform>
+                <Rectangle.Fill>
+                    <ImageBrush ImageSource="Images/arrow_2.png" Stretch="Uniform"/>
+                </Rectangle.Fill>
+            </Rectangle>
+
+
+            <!-- TEXT -->
+            <TextBlock 
+                       Text="{DynamicResource lang_Guide_Server}" 
+                       TextWrapping="Wrap" Margin="261,26,10,354" FontSize="14" FontWeight="Bold"/>
+            <TextBlock 
+                       Text="{DynamicResource lang_Guide_Chest}"
+                       TextWrapping="Wrap" Margin="105,138,12,243" FontSize="14" FontWeight="Bold" />
+            <TextBlock 
+                       Text="{DynamicResource lang_Guide_Boss}" 
+                       TextWrapping="Wrap" Margin="229,184,10,197" FontSize="14" FontWeight="Bold"/>
+            <TextBlock 
+                       Text="{DynamicResource lang_Guide_Start}"
+                       TextWrapping="Wrap" Margin="273,231,10,111" FontSize="14" FontWeight="Bold"/>
+            <TextBlock 
+                       Text="{DynamicResource lang_Guide_Stop}"
+                       TextWrapping="Wrap" Margin="183,337,12,24" FontSize="14" FontWeight="Bold"/>
+        </Grid>
+
+        <!--GUIDE END-->
+
+    </Grid>
+</Window>

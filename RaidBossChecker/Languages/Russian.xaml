@@ -1,0 +1,66 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:RaidBossChecker.Languages" 
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <!--REGULAR NAMES AND TITLES-->
+    <system:String x:Key="lang_Title">Raid Boss Checker</system:String>
+    <system:String x:Key="lang_SubTitle">Only for Asterios.tm</system:String>
+
+    <system:String x:Key="lang_TopBarMessage_IsCopied">скопирован</system:String>
+    <system:String x:Key="lang_TopBarMessage_InfoAbout">Информация о</system:String>
+    <system:String x:Key="lang_TopBarMessage_Copied">скопирована</system:String>
+
+    <system:String x:Key="lang_Settings">Настройки</system:String>
+    <system:String x:Key="lang_SoundAlert">Звуковое оповещение</system:String>
+    <system:String x:Key="lang_ShowTime">Показывать время</system:String>
+    <system:String x:Key="lang_MSKTime">МСК</system:String>
+    <system:String x:Key="lang_MyTime">Свое</system:String>
+    <system:String x:Key="lang_UpdateEvery">Обновлять список</system:String>
+    <system:String x:Key="lang_Every">каждые</system:String>
+    <system:String x:Key="lang_Min">мин</system:String>
+    <system:String x:Key="lang_Sec">сек</system:String>
+    <system:String x:Key="lang_Updated">Обновлено:</system:String>
+    <system:String x:Key="lang_Found">Найдено:</system:String>
+    <system:String x:Key="lang_SearchAnimation_Title">Поиск</system:String>
+    <!--CheckBoxes RaidBosses-->
+    <system:String x:Key="lang_Cbox_Cabrio">Cabrio</system:String>
+    <system:String x:Key="lang_Cbox_Hallate">Hallate (3 ТоИ)</system:String>
+    <system:String x:Key="lang_Cbox_Kernon">Kernon (8 ТоИ)</system:String>
+    <system:String x:Key="lang_Cbox_Golkonda">Golkonda (11 ТоИ)</system:String>
+    <!--ListView names and titles-->
+    <system:String x:Key="lang_Boss">Босс:</system:String>
+    <system:String x:Key="lang_Killed">Убит:</system:String>
+    <system:String x:Key="lang_RespawnFrom">Появится с:</system:String>
+    <system:String x:Key="lang_RespawnTo">Появится до:</system:String>
+    <!-- for behind-code -->
+    <system:String x:Key="lang_Code_KilledIn">убит</system:String>
+    <system:String x:Key="lang_Code_RespawnFrom">Появится с</system:String>
+    <system:String x:Key="lang_Code_To">до</system:String>
+    <!--BUTTONS-->
+    <system:String x:Key="lang_ShowAllRaidBosses">Все боссы</system:String>
+    <system:String x:Key="lang_ShowAllKeyRaidBosses">Саб-класс боссы</system:String>
+    <system:String x:Key="lang_Start">Поиск</system:String>
+    <system:String x:Key="lang_Stop">Стоп</system:String>
+    <system:String x:Key="lang_Help">Помощь</system:String>
+    <system:String x:Key="lang_Close">Закрыть</system:String>
+    <!--ABOUT MENU -->
+    <system:String x:Key="lang_Description">Приложение создано специально для серверов Lineage 2 Asterios.tm</system:String>
+    <system:String x:Key="lang_Version">Версия: </system:String>
+    <system:String x:Key="lang_Copyright">Авторское право ©</system:String>
+    <system:String x:Key="lang_AllRightsReserved">Богдан Кучер. Все права защищены.</system:String>
+    <system:String x:Key="lang_License">Лицензия: Freeware, для получения дополнительной информации см. </system:String>
+    <system:String x:Key="lang_TermOfUse">Условия пользования</system:String>
+    <!--TERM OF USE-->
+    <system:String x:Key="lang_TermOfUse_Title">Raid Boss Checker &quot;Условия пользования&quot;</system:String>
+    <system:String x:Key="lang_TermOfUse_General">Для использования этого программного обеспечения вы должны следовать и соблюдать следующие пункты:</system:String>
+    <system:String x:Key="lang_TermOfUse_1">Эта программа является бесплатной. Вы можете использовать ее и распространять без какой-либо оплаты, но НЕ для коммерческого использования.</system:String>
+    <system:String x:Key="lang_TermOfUse_2">Вы НЕ можете вносить какие-либо изменения в эту программу путем взлома программного обеспечения или любым другим способом.</system:String>
+    <system:String x:Key="lang_TermOfUse_3">Владельцем этой программы является Богдан Кучер и всегда является им.</system:String>
+    <system:String x:Key="lang_TermOfUse_4">Владелец программы не несет ответственность за повреждения ваших файлов или системы при использовании данной программы.</system:String>
+    <!--GUIDE PAGE-->
+    <system:String x:Key="lang_Guide_Server">Выберите свой сервер</system:String>
+    <system:String x:Key="lang_Guide_Chest">При нажатии скопируется таргет на сундук</system:String>
+    <system:String x:Key="lang_Guide_Boss">Выберите босса, который необходим по квесту</system:String>
+    <system:String x:Key="lang_Guide_Start">Нажмите кнопку для начала поиска. Через несколько секунд после убийства босса Вы получите звуковой сигнал</system:String>
+    <system:String x:Key="lang_Guide_Stop">После нажатии остановится поиск и звуковое оповещение</system:String>
+</ResourceDictionary>

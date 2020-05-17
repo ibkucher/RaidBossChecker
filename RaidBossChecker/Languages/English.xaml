@@ -1,0 +1,66 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:RaidBossChecker.Languages" 
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <!--REGULAR NAMES AND TITLES-->
+    <system:String x:Key="lang_Title">Raid Boss Checker</system:String>
+    <system:String x:Key="lang_SubTitle">Only for Asterios.tm</system:String>
+
+    <system:String x:Key="lang_TopBarMessage_IsCopied">is copied</system:String>
+    <system:String x:Key="lang_TopBarMessage_InfoAbout">Information about</system:String>
+    <system:String x:Key="lang_TopBarMessage_Copied">is copied</system:String>
+
+    <system:String x:Key="lang_Settings">Settings</system:String>
+    <system:String x:Key="lang_SoundAlert">Sound alert</system:String>
+    <system:String x:Key="lang_ShowTime">Show time</system:String>
+    <system:String x:Key="lang_MSKTime">MSK</system:String>
+    <system:String x:Key="lang_MyTime">My</system:String>
+    <system:String x:Key="lang_UpdateEvery">Update list</system:String>
+    <system:String x:Key="lang_Every">every</system:String>
+    <system:String x:Key="lang_Min">min</system:String>
+    <system:String x:Key="lang_Sec">sec</system:String>
+    <system:String x:Key="lang_Updated">Updated:</system:String>
+    <system:String x:Key="lang_Found">Found:</system:String>
+    <system:String x:Key="lang_SearchAnimation_Title">Searching</system:String>
+    <!--CheckBoxes RaidBosses-->
+    <system:String x:Key="lang_Cbox_Cabrio">Cabrio</system:String>
+    <system:String x:Key="lang_Cbox_Hallate">Hallate (3 ToI)</system:String>
+    <system:String x:Key="lang_Cbox_Kernon">Kernon (8 ToI)</system:String>
+    <system:String x:Key="lang_Cbox_Golkonda">Golkonda (11 ToI)</system:String>
+    <!--ListView names and titles-->
+    <system:String x:Key="lang_Boss">Boss:</system:String>
+    <system:String x:Key="lang_Killed">Killed:</system:String>
+    <system:String x:Key="lang_RespawnFrom">Respawn from:</system:String>
+    <system:String x:Key="lang_RespawnTo">Respawn to:</system:String>
+    <!-- for behind-code -->
+    <system:String x:Key="lang_Code_KilledIn">killed</system:String>
+    <system:String x:Key="lang_Code_RespawnFrom">Respawn from</system:String>
+    <system:String x:Key="lang_Code_To">to</system:String>
+    <!--BUTTONS-->
+    <system:String x:Key="lang_ShowAllRaidBosses">All bosses</system:String>
+    <system:String x:Key="lang_ShowAllKeyRaidBosses">Sub-class bosses</system:String>
+    <system:String x:Key="lang_Start">Start</system:String>
+    <system:String x:Key="lang_Stop">Stop</system:String>
+    <system:String x:Key="lang_Help">Help</system:String>
+    <system:String x:Key="lang_Close">Close</system:String>
+    <!--ABOUT MENU -->
+    <system:String x:Key="lang_Description">The application is created specifically for Lineage 2 servers Asterios.tm</system:String>
+    <system:String x:Key="lang_Version">Version: </system:String>
+    <system:String x:Key="lang_Copyright">Copyright ©</system:String>
+    <system:String x:Key="lang_AllRightsReserved">Bohdan Kucher. All rights reserved.</system:String>
+    <system:String x:Key="lang_License">License: Freeware, for more information see </system:String>
+    <system:String x:Key="lang_TermOfUse">Term of Use</system:String>
+    <!--TERM OF USE-->
+    <system:String x:Key="lang_TermOfUse_Title">Raid Boss Checker &quot;Term of Use&quot;</system:String>
+    <system:String x:Key="lang_TermOfUse_General">For using this software you must follow and obey the following items:</system:String>
+    <system:String x:Key="lang_TermOfUse_1">This program is freeware you can use and distribute it without any payment, but NOT for commercial use.</system:String>
+    <system:String x:Key="lang_TermOfUse_2">You are NOT ALLOW to make any changes in this program by hacking softwares or in any other ways.</system:String>
+    <system:String x:Key="lang_TermOfUse_3">This program's owner is Bohdan Kucher and always refer to him.</system:String>
+    <system:String x:Key="lang_TermOfUse_4">This program does not guarantee from damages to your files or system and the developer does not have any warranty.</system:String>
+    <!--GUIDE PAGE-->
+    <system:String x:Key="lang_Guide_Server">Choose your server</system:String>
+    <system:String x:Key="lang_Guide_Chest">By click the target on the chest will be copied</system:String>
+    <system:String x:Key="lang_Guide_Boss">Choose the boss you need for the quest</system:String>
+    <system:String x:Key="lang_Guide_Start">Click the button to start the search. A few seconds after killing the boss, you will receive a sound alert</system:String>
+    <system:String x:Key="lang_Guide_Stop">After clicking, the search and sound alert will stop</system:String>
+</ResourceDictionary>
