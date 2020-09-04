@@ -48,13 +48,13 @@
     <system:String x:Key="lang_Version">Version: </system:String>
     <system:String x:Key="lang_Copyright">Copyright ©</system:String>
     <system:String x:Key="lang_AllRightsReserved">Bohdan Kucher. All rights reserved.</system:String>
-    <system:String x:Key="lang_License">License: Freeware, for more information see </system:String>
+    <system:String x:Key="lang_License">License: GNU AGPLv3, for more information see </system:String>
     <system:String x:Key="lang_TermOfUse">Term of Use</system:String>
     <!--TERM OF USE-->
     <system:String x:Key="lang_TermOfUse_Title">Raid Boss Checker &quot;Term of Use&quot;</system:String>
     <system:String x:Key="lang_TermOfUse_General">For using this software you must follow and obey the following items:</system:String>
-    <system:String x:Key="lang_TermOfUse_1">This program is freeware you can use and distribute it without any payment, but NOT for commercial use.</system:String>
-    <system:String x:Key="lang_TermOfUse_2">You are NOT ALLOW to make any changes in this program by hacking softwares or in any other ways.</system:String>
+    <system:String x:Key="lang_TermOfUse_1">This program is freeware you can use and distribute it without any payment.</system:String>
+    <system:String x:Key="lang_TermOfUse_2">For any changes to the source code of the program, you must always indicate the copyright and license.</system:String>
     <system:String x:Key="lang_TermOfUse_3">This program's owner is Bohdan Kucher and always refer to him.</system:String>
     <system:String x:Key="lang_TermOfUse_4">This program does not guarantee from damages to your files or system and the developer does not have any warranty.</system:String>
     <!--GUIDE PAGE-->

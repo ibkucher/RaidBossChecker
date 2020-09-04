@@ -52,7 +52,7 @@ namespace RaidBossChecker
 
 
 
-        // HTML READER START
+        // HTML READER START - not in use
         private HtmlDocument htmlDocument;
         private async Task ReaderHtml(string filter, int count, bool search)
         {
@@ -94,19 +94,21 @@ namespace RaidBossChecker
                         rbInfo.Add(new RaidBoss() { Name = nameBoss, TimeKilled = dateKilledLocal, RespawnStart = respawnStart, RespawnEnd = respawnEnd }); // time killed computer time
                     }
 
-                }
-                if (checkBoxMskTime.IsChecked == true)
-                {
-                    lblLastTimeUpdated.Content = DateTime.UtcNow.AddHours(3).ToString("dd.MM.yyyy HH:mm:ss"); // Last time updated by MSK time
-
-                }
-                if (checkBoxMskTime.IsChecked == false)
-                {
-                    lblLastTimeUpdated.Content = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss"); // last time updated by computer time
-                }
+                }  
 
             }
-            
+
+            if (checkBoxMskTime.IsChecked == true)
+            {
+                lblLastTimeUpdated.Content = DateTime.UtcNow.AddHours(3).ToString("dd.MM.yyyy HH:mm:ss"); // Last time updated by MSK time
+
+            }
+
+            if (checkBoxMskTime.IsChecked == false)
+            {
+                lblLastTimeUpdated.Content = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss"); // last time updated by computer time
+            }
+
         }
         // HTML READER END
 
@@ -137,16 +139,12 @@ namespace RaidBossChecker
                 feedAllBosses = new SyndicationFeed(feedKey.Items.Union(feedEpic.Items));
             });
 
-            //var feed = FeedReader.Read(@"https://asterios.tm/index.php?cmd=rss&serv=" + cboxServerList.SelectedValue  + "&filter=" + filter + "&out=xml"); // link cboxServerList.SelectedValue
-
             foreach (SyndicationItem item in feedAllBosses.Items)
             {
                 String title = item.Title.Text
                     .Replace("Boss ", String.Empty)
                     .Replace(" was killed", String.Empty)
                     .Replace("Убит босс ", String.Empty); // Remove some words from rss
-
-                //listBox.Items.Add(item.Title + " - " + item.PublishingDate); // ONLY FOR TEST
 
                 if (!search || (item.PublishDate.UtcDateTime.AddMinutes(showTime[0]) >= DateTime.UtcNow & item.PublishDate.UtcDateTime <= DateTime.UtcNow)) // если время респа + добавленное время больше текущего тогда показываем
                 {
@@ -169,16 +167,17 @@ namespace RaidBossChecker
                     }
 
                 }
-                if (checkBoxMskTime.IsChecked == true)
-                {
-                    lblLastTimeUpdated.Content = DateTime.UtcNow.AddHours(3).ToString("dd.MM.yyyy HH:mm:ss"); // Last time updated by MSK time
+                
+            }
 
-                }
-                if (checkBoxMskTime.IsChecked == false)
-                {
-                    lblLastTimeUpdated.Content = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss"); // last time updated by computer time
-                }
+            if (checkBoxMskTime.IsChecked == true)
+            {
+                lblLastTimeUpdated.Content = DateTime.UtcNow.AddHours(3).ToString("dd.MM.yyyy HH:mm:ss"); // Last time updated by MSK time
 
+            }
+            if (checkBoxMskTime.IsChecked == false)
+            {
+                lblLastTimeUpdated.Content = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss"); // last time updated by computer time
             }
         }
         // RSS READER FOR BOSSES END
@@ -208,7 +207,8 @@ namespace RaidBossChecker
             rbInfo.Clear();
             listView.Items.Clear();
 
-            await ReaderHtml("keyboss", 5, true); // search only in first 10 keybosses and compair their time to our
+            //await ReaderHtml("keyboss", 5, true); // search only in first 10 keybosses and compair their time to our
+            await ReaderRss(true);
 
             // filtring and sending rbInfo list information to ListView
             if (rbInfo.Count > 0)
@@ -357,6 +357,7 @@ namespace RaidBossChecker
             listView.Visibility = Visibility.Visible; // показывать ListView на переднем плане
             listViewAllRB.Visibility = Visibility.Hidden; // скрыть ListViewAllRB на задний план
             listView.Items.Clear(); // предварительно очистить лист от предыдущих записей
+            lblLastTimeUpdated.Content = "---";
             // SOUND
             Sound.SaveSoundToDisk(); // save selected sound to temp folder
             // Server List
@@ -427,8 +428,10 @@ namespace RaidBossChecker
             listViewAllRB.Visibility = Visibility.Hidden;
             rbInfo.Clear();
             listView.Items.Clear();
+            lblLastTimeUpdated.Content = "---"; // Last time updated
 
-            await ReaderHtml("keyboss", 50, false);
+            // await ReaderHtml("keyboss", 50, false);
+            await ReaderRss(false);
 
             rbInfo.Where(x => rbAllKeybossNames.Count(y => x.Name.Contains(y)) != 0)
                 .GroupBy(x => x.Name).Select(g => g.First()) // this line is to remove duplicates from the list
@@ -446,6 +449,7 @@ namespace RaidBossChecker
             listViewAllRB.Visibility = Visibility.Visible;
             rbInfo.Clear();
             listViewAllRB.Items.Clear();
+            lblLastTimeUpdated.Content = "---"; // Last time updated
 
             await ReaderRss(false);
 
@@ -618,17 +622,17 @@ namespace RaidBossChecker
 
         private void BtnChestKernon_Click(object sender, RoutedEventArgs e)
         {
-            TopBarMessageShowAndCopy("/target Hallate's chest");
+            TopBarMessageShowAndCopy("/target Chest of Kernon");
         }
 
         private void BtnChestHallate_Click(object sender, RoutedEventArgs e)
         {
-            TopBarMessageShowAndCopy("/target Chest of Kernon");
+            TopBarMessageShowAndCopy("/target Hallate's chest");
         }
 
         private void BtnChestGolkonda_Click(object sender, RoutedEventArgs e)
         {
-            TopBarMessageShowAndCopy("/target Chest of Golkonda﻿");
+            TopBarMessageShowAndCopy("/target Chest of Golkonda");
         }
 
         // GUIDE PAGE

@@ -48,13 +48,13 @@
     <system:String x:Key="lang_Version">Версия: </system:String>
     <system:String x:Key="lang_Copyright">Авторское право ©</system:String>
     <system:String x:Key="lang_AllRightsReserved">Богдан Кучер. Все права защищены.</system:String>
-    <system:String x:Key="lang_License">Лицензия: Freeware, для получения дополнительной информации см. </system:String>
+    <system:String x:Key="lang_License">Лицензия: GNU AGPLv3, для получения дополнительной информации см. </system:String>
     <system:String x:Key="lang_TermOfUse">Условия пользования</system:String>
     <!--TERM OF USE-->
     <system:String x:Key="lang_TermOfUse_Title">Raid Boss Checker &quot;Условия пользования&quot;</system:String>
     <system:String x:Key="lang_TermOfUse_General">Для использования этого программного обеспечения вы должны следовать и соблюдать следующие пункты:</system:String>
-    <system:String x:Key="lang_TermOfUse_1">Эта программа является бесплатной. Вы можете использовать ее и распространять без какой-либо оплаты, но НЕ для коммерческого использования.</system:String>
-    <system:String x:Key="lang_TermOfUse_2">Вы НЕ можете вносить какие-либо изменения в эту программу путем взлома программного обеспечения или любым другим способом.</system:String>
+    <system:String x:Key="lang_TermOfUse_1">Эта программа является бесплатной. Вы можете использовать ее и распространять без какой-либо оплаты.</system:String>
+    <system:String x:Key="lang_TermOfUse_2">При любых изменениях в исходном коде программы, вы обязаны всегда указывать авторское право и лицензию.</system:String>
     <system:String x:Key="lang_TermOfUse_3">Владельцем этой программы является Богдан Кучер и всегда является им.</system:String>
     <system:String x:Key="lang_TermOfUse_4">Владелец программы не несет ответственность за повреждения ваших файлов или системы при использовании данной программы.</system:String>
     <!--GUIDE PAGE-->
