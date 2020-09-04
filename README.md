@@ -2,7 +2,7 @@
 
 [![GitHub release](https://img.shields.io/github/v/release/ibkucher/raidbosschecker?label=version&color=important&style=for-the-badge)](https://github.com/ibkucher/RaidBossChecker/releases/)
 [![Github all releases](https://img.shields.io/github/downloads/ibkucher/raidbosschecker/total?style=for-the-badge&color=yellow)](https://github.com/ibkucher/RaidBossChecker/releases/)
-[![VirusTotal](https://img.shields.io/badge/VirusTotal-done-success?style=for-the-badge)](https://www.virustotal.com/gui/file/8c42aded0037d6983ce33ee13d3a02acc43f1e2bc4e4ecba4d26454569d6ce78/detection)
+[![VirusTotal](https://img.shields.io/badge/VirusTotal-done-success?style=for-the-badge)](https://www.virustotal.com/gui/file/2917a3cc55165a81b0bda9f4a0f208d9cdd1ca70fef6b71938fa75c3513eba52/detection)
 [![Made with C# WPF](https://img.shields.io/badge/made%20with-c%23%20WPF-blue?style=for-the-badge)](https://github.com/ibkucher/RaidBossChecker/)\
 [![Download](https://img.shields.io/badge/Download%20/%20СКАЧАТЬ-Raid%20Boss%20Checker%20.%20exe-blueviolet?style=for-the-badge&logo=download)](https://github.com/ibkucher/RaidBossChecker/releases/download/v0.1.1.4/RaidBossChecker.exe)
 
